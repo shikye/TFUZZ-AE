@@ -1,0 +1,26 @@
+Module                              #Counts  IdealStates     NonZero    ReachableStates
+TLXbar_8                            3        8               3          8
+TLB                                 13       8192            13         8192
+DCache                              13       8192            13         8192
+ICache                              6        64              6          64
+ShiftQueue                          1        2               1          2
+TLB_1                               13       8192            13         8192
+BTB                                 13       8192            13         8192
+Frontend                            10       1024            10         1024
+MulAddRecFNPipe                     1        2               1          2
+FPToInt                             4        16              4          16
+IntToFP                             4        16              4          16
+FPToFP                              6        64              6          64
+MulAddRecFNPipe_1                   1        2               1          2
+DivSqrtRawFN_small                  3        8               3          8
+DivSqrtRawFN_small_1                3        8               3          8
+FPU                                 13       8192            11         2048
+HellaCacheArbiter                   1        2               1          2
+PTW                                 13       8192            11         2048
+IBuf                                2        4               2          4
+CSRFile                             13       8192            13         8192
+MulDiv                              13       8192            13         8192
+Rocket                              13       8192            13         8192
+
+==========================================================================================
+TOTAL                                        74948                      62660

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "stored": "000__cov_data_4_5_optmap_0x1000_withcorpus.txt",
+      "original": "data/fig7_cov_instr/cov_data_4_5_optmap_0x1000_withcorpus.txt",
+      "size_bytes": 118755297
+    },
+    {
+      "stored": "001__cov_data_4_10_optmap_0x400_withcorpus.txt",
+      "original": "data/fig11_overall/cov_data_4_10_optmap_0x400_withcorpus.txt",
+      "size_bytes": 123686861
+    },
+    {
+      "stored": "002__cov_data_4_5_optmap_0x1000_withcorpus.txt",
+      "original": "data/fig11_overall/cov_data_4_5_optmap_0x1000_withcorpus.txt",
+      "size_bytes": 118755297
+    },
+    {
+      "stored": "003__cov_data_hwfuzz_fo_0x1000_3.14_withsimpoint.txt",
+      "original": "data/fig10_deepexplore/cov_data_hwfuzz_fo_0x1000_3.14_withsimpoint.txt",
+      "size_bytes": 329170927
+    }
+  ]
+}
