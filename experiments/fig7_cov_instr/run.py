@@ -25,9 +25,9 @@ mpl.rcParams.update({
 
 # 方法名称和文件路径
 methods = [
-    ("DifuzzRTL", "../../data/fig7_cov_inst/cov_data_difuzz_100_200_4_8_noopt.txt", "../../data/fig7_cov_inst/cov_data_difuzz_100_200_4_7_opt.txt"),
-    ("Cascade", "../../data/fig7_cov_inst/cascade_noopt_limitfieature_4_8.txt", "../../data/fig7_cov_inst/cascade_opt_limitfieature_4_6.txt"),
-    ("TurboFuzz", "../../data/fig7_cov_inst/cov_data_hwfuzz_fo_0x1000_3.12_0.txt", "../../data/fig7_cov_inst/cov_data_4_5_optmap_0x1000_withcorpus.txt"),
+    ("DifuzzRTL", "../../data/fig7_cov_instr/cov_data_difuzz_100_200_4_8_noopt.txt", "../../data/fig7_cov_instr/cov_data_difuzz_100_200_4_7_opt.txt"),
+    ("Cascade", "../../data/fig7_cov_instr/cascade_noopt_limitfieature_4_8.txt", "../../data/fig7_cov_instr/cascade_opt_limitfieature_4_6.txt"),
+    ("TurboFuzz", "../../data/fig7_cov_instr/cov_data_hwfuzz_fo_0x1000_3.12_0.txt", "../../data/fig7_cov_instr/cov_data_4_5_optmap_0x1000_withcorpus.txt"),
 ]
 
 # 读取函数

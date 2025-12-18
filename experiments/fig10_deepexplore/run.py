@@ -163,8 +163,8 @@ fig.add_artist(con1)
 fig.add_artist(con2)
 
 # ===== 保存与展示 =====
-# plt.savefig("inst_vs_coverage_split_simpoint_final.png", bbox_inches='tight')
-# plt.show()
+plt.savefig("inst_vs_coverage_split_simpoint_final.png", bbox_inches='tight')
+plt.show()
 
 
 
