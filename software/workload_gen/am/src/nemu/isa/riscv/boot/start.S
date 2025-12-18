@@ -96,11 +96,11 @@ _start:
 
   li t2, 2
   # for beforeSimPoint==========
-  li t0, 1
+  # li t0, 1
   # for beforeSimPoint==========
 
   # for afterSimPoint==========
-  # li t0, 0
+  li t0, 0
   # for afterSimPoint==========
   beqz t0, Init_table
   beq t0, t2, Simpoint_Phase_Context

@@ -1,15 +1,15 @@
 app = microbench
-benchmark_path ?= ~/nexus-am/apps/$(app)
-start_path = ~/nexus-am/am/src/nemu/isa/riscv/boot/start.S
+benchmark_path ?= ../workload_gen/apps/$(app)
+start_path = ../workload_gen/am/src/nemu/isa/riscv/boot/start.S
 disasm_path = $(CURDIR)/output/disasm.txt
-program ?= ~/nexus-am/apps/$(app)/build/$(app)-riscv64-xs.bin
+program ?= ../workload_gen/apps/$(app)/build/$(app)-riscv64-xs.bin
 interval_length = 3000
 maxK = 60
-bbfile ?= ~/NEMU/test_for_profiling/Profiling/workload/simpoint_bbv
-bbvoutput ?= ~/NEMU/bbvoutput.txt
-intervalfile ?= ~/NEMU/interval_init.txt
-elf_txt = ~/nexus-am/apps/$(app)/build/$(app)-riscv64-xs.txt
-elf = ~/nexus-am/apps/$(app)/build/$(app)-riscv64-xs.elf
+bbfile ?= ../NEMU/test_for_profiling/Profiling/workload/simpoint_bbv
+bbvoutput ?= ../NEMU/bbvoutput.txt
+intervalfile ?= ../NEMU/interval_init.txt
+elf_txt = ../workload_gen/apps/$(app)/build/$(app)-riscv64-xs.txt
+elf = ../workload_gen/apps/$(app)/build/$(app)-riscv64-xs.elf
 simpoints_file ?= ./output/simpoints
 outdir = $(CURDIR)/output
 idx = 7103
@@ -27,13 +27,13 @@ all: first_step second_step third_step forth_step fifth_step sixth_step seventh_
 first_step:
 	python scripts/changeStart.py before $(start_path) $(start_path)
 	cd $(benchmark_path) && make ARCH=riscv64-xs $(option)
-	cd $(benchmark_path) && riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm1.txt
+	cd $(benchmark_path) && $(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm1.txt
 
 #2.生成sample.bb 以及 bbvoutput.txt
 second_step:
-	cd ~/NEMU && ./build/riscv64-nemu-interpreter $(program) \
-	-b --cpt-interval=$(interval_length) -D /home/shikye/NEMU/test_for_profiling -C Profiling -w workload
-	gunzip ~/NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
+	cd ../NEMU && ./build/riscv64-nemu-interpreter $(program) \
+	-b --cpt-interval=$(interval_length) -D $(CURDIR)/../NEMU/test_for_profiling -C Profiling -w workload
+	gunzip ../NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
 
 #3.生成每个bb的instmap
 third_step:
@@ -50,27 +50,27 @@ fifth_step:
 #6.根据聚类后的interval id找到起始状态、地址，以及下一条指令的地址
 sixth_step:
 	-rm -rf $(bbfile)
-	cd ~/NEMU && ./build/riscv64-nemu-interpreter $(program) \
-	-b --cpt-interval=$(interval_length) -D /home/shikye/NEMU/test_for_profiling -C Profiling -w workload -B $(realpath $(simpoints_file)) --dump-mem=/home/shikye/SimPoint.3.2-fix/dumpfile/dumpmem.bin
-	gunzip ~/NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
+	cd ../NEMU && ./build/riscv64-nemu-interpreter $(program) \
+	-b --cpt-interval=$(interval_length) -D $(CURDIR)/../NEMU/test_for_profiling -C Profiling -w workload -B $(realpath $(simpoints_file)) --dump-mem=$(CURDIR)/dumpfile/dumpmem.bin
+	gunzip ../NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
 
 #7.处理intervalfile成指令
 seventh_step:
 	python scripts/interval.py $(intervalfile)
-	riscv64-unknown-linux-gnu-gcc -c output/Interval_init.S -o output/Interval_init.o
-	riscv64-unknown-linux-gnu-objdump -d -s output/Interval_init.o > $(outdir)/disasm2.txt
-	-rm ~/nexus-am/am/src/nemu/isa/riscv/boot/Interval_init.S
-	mv output/Interval_init.S ~/nexus-am/am/src/nemu/isa/riscv/boot/Interval_init.S
+	$(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-gcc -c output/Interval_init.S -o output/Interval_init.o
+	$(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-objdump -d -s output/Interval_init.o > $(outdir)/disasm2.txt
+	-rm ../workload_gen/am/src/nemu/isa/riscv/boot/Interval_init.S
+	mv output/Interval_init.S ../workload_gen/am/src/nemu/isa/riscv/boot/Interval_init.S
 
 #8.重新编译benchmark并运行，获取内存数据
 eighth_step:
 	cd $(benchmark_path) && make ARCH=riscv64-xs $(option)
-	cd $(benchmark_path) && riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm3.txt
+	cd $(benchmark_path) && $(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm3.txt
 	-rm -rf $(bbfile)
 	-rm dumpfile/*
-	cd ~/NEMU && ./build/riscv64-nemu-interpreter $(program) \
-	-b --cpt-interval=$(interval_length) -D /home/shikye/NEMU/test_for_profiling -C Profiling -w workload -B $(realpath $(simpoints_file)) --dump-mem=/home/shikye/SimPoint.3.2-fix/dumpfile/dumpmem.bin
-	gunzip ~/NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
+	cd ../NEMU && ./build/riscv64-nemu-interpreter $(program) \
+	-b --cpt-interval=$(interval_length) -D $(CURDIR)/../NEMU/test_for_profiling -C Profiling -w workload -B $(realpath $(simpoints_file)) --dump-mem=$(CURDIR)/dumpfile/dumpmem.bin
+	gunzip ../NEMU/test_for_profiling/Profiling/workload/simpoint_bbv.gz
 
 #9.dump出数据段 bin2txt会修改interval_counter的值
 ninth_step:
@@ -84,21 +84,22 @@ ninth_step:
 tenth_step:
 	python scripts/changeStart.py after $(start_path) $(start_path)
 	cd $(benchmark_path) && make ARCH=riscv64-xs $(option)
-	cd $(benchmark_path) && riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm4.txt
+	cd $(benchmark_path) && $(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm4.txt
 	mv $(bbfile) $(outdir)/simpoint.bb
 
 #11.输出有效文件
 eleventh_step:
-	rm ~/on_board/* -rf
-	cp -r dumpoutput ~/on_board
-	cp $(program) ~/on_board
+	-rm ./on_board/* -rf
+	mkdir on_board
+	cp -r dumpoutput ./on_board
+	cp $(program) ./on_board
 
 
 choose_idx:
-	python scripts/fuzz_interval.py ~/nexus-am/am/src/nemu/isa/riscv/boot/Interval_init.S $(idx)
+	python scripts/fuzz_interval.py ../workload_gen/am/src/nemu/isa/riscv/boot/Interval_init.S $(idx)
 	python scripts/changeStart.py after $(start_path) $(start_path)
 	cd $(benchmark_path) && make ARCH=riscv64-xs $(option)
-	cd $(benchmark_path) && riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm4.txt
+	cd $(benchmark_path) && $(CURDIR)/../riscv-toolchain/bin/riscv64-unknown-linux-gnu-objdump -d -s build/$(app)-riscv64-xs.elf > $(outdir)/disasm4.txt
 
 
 
@@ -146,7 +147,7 @@ choose_idx:
 
 
 clean:
-	rm -rf $(outdir)/* $(bbfile) $(bbvoutput) $(intervalfile) dumpfile/* dumptxt/*
+	rm -rf $(outdir)/* $(bbfile) $(bbvoutput) $(intervalfile) dumpfile/* dumptxt/* on_board/*
 
 run: FORCE
 	./simpoint -loadFVFile ../input/sample.bb -maxK 30 -saveSimpoints ../output/sample.simpoints -saveSimpointWeights ../output/sample.weights
