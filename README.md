@@ -56,7 +56,22 @@ The directory is organized into several modules:
   FIRRTL-based instrumentation pass that inserts TurboFuzz coverage hooks into the DUT (Rocket).
 
 - `workload_gen/`  
-  Workload generation utilities (based on `nexus-am`) for creating runnable test programs.
+  Workload generation utilities for creating runnable test programs.
+
+  In addition, workload_gen provides a one-command flow to generate SimPoint-style sliced workloads via make.
+  This pipeline automatically performs:
+
+  Build the benchmark (compile the original benchmark).
+
+  Extract basic block information from the benchmark.
+
+  Run profile extraction and clustering (SimPoint-style) to select representative slices.
+
+  Hack/transform the original benchmark to integrate the sampled slices back into the benchmark source/build.
+
+  Rebuild the benchmark and export the final runnable workload to the on_board/ directory.
+
+  (The generated artifacts under on_board/ can be directly used for on-board/FPGA runs, depending on the rest of the flow.)
 
 - `workload_prefix/`  
   Prefix-based workload builder for constructing program fragments or instruction prefixes.
@@ -159,14 +174,28 @@ Tested on:
 
 If the reviewer wants a single command that regenerates all plots:
 
+If you clone from github, you need git lfs and please run follow commands first:
 ```bash
 python3 manage_large_files.py restore
+
+```
+
+and then commom commands:
+
+```bash
 
 for d in experiments/*; do
     if [ -f "$d/run.py" ]; then
         (cd "$d" && python3 run.py)
     fi
 done
+```
+
+and if you want to regenerate the workload flow:
+```bash
+cd software/simpoint_tools
+make
+
 ```
 
 (You may include this as `experiments/run_all.sh` if desired.)
