@@ -5,7 +5,7 @@ import re
 
 # 样式设置（论文风格）
 mpl.rcParams.update({
-    "font.family": "Arial",
+    # "font.family": "Arial",
     "font.size": 8,
     "axes.labelsize": 7,
     "axes.titlesize": 7,

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # ===== 样式设置（论文标准） =====
 plt.rcParams.update({
-    "font.family": "Arial",
+    # "font.family": "Arial",
     "font.size": 8,
     "axes.labelsize": 7,
     "axes.titlesize": 7,

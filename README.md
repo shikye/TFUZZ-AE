@@ -160,6 +160,8 @@ Tested on:
 If the reviewer wants a single command that regenerates all plots:
 
 ```bash
+python3 manage_large_files.py restore
+
 for d in experiments/*; do
     if [ -f "$d/run.py" ]; then
         (cd "$d" && python3 run.py)

@@ -7,7 +7,7 @@ from matplotlib.patches import Rectangle, ConnectionPatch
 import numpy as np
 # ===== 样式设置 =====
 mpl.rcParams.update({
-    "font.family": "Arial",
+    # "font.family": "Arial",
     "font.size": 8,
     "axes.labelsize": 8,
     "axes.titlesize": 8,

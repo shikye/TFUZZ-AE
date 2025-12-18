@@ -6,7 +6,7 @@ import re
 # 样式设置
 mpl.rcParams['text.usetex'] = False
 mpl.rcParams.update({
-    "font.family": "Arial",
+    # "font.family": "Arial",
     "font.size": 8,
     # "axes.labelsize": 8,
     "axes.titlesize": 8,
