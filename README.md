@@ -174,30 +174,29 @@ Tested on:
 
 If the reviewer wants a single command that regenerates all plots:
 
-If you clone from github, you need git lfs and please run follow commands first:
+If you clone from github, you need git lfs and please run follow command first:
 ```bash
 python3 manage_large_files.py restore
-
 ```
 
 and then commom commands:
 
 ```bash
-
 for d in experiments/*; do
     if [ -f "$d/run.py" ]; then
         (cd "$d" && python3 run.py)
     fi
 done
 ```
+(You may include this as `experiments/run_all.sh` if desired.)
+
+After running run.py, each figure will be generated under the corresponding experiments/<exp_name>/ directory (i.e., the same directory where run.py is located).
 
 and if you want to regenerate the workload flow:
 ```bash
 cd software/simpoint_tools
 make
-
 ```
 
-(You may include this as `experiments/run_all.sh` if desired.)
 
----
+

@@ -16,7 +16,8 @@ idx = 7103
 
 # option = mainargs=test
 option = 
-
+export AM_HOME = $(CURDIR)/../workload_gen
+export PATH := $(CURDIR)/../riscv-toolchain/bin:$(PATH)
 
 
 .PHONY: first_step second_step third_step forth_step fifth_step sixth_step seventh_step eighth_step ninth_step tenth_step clean choose_idx
@@ -89,7 +90,7 @@ tenth_step:
 
 #11.输出有效文件
 eleventh_step:
-	-rm ./on_board/* -rf
+	-rm -rf ./on_board
 	mkdir on_board
 	cp -r dumpoutput ./on_board
 	cp $(program) ./on_board
